@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 
 const dotenv = require("dotenv");
@@ -19,7 +20,6 @@ if (process.env.NODE_ENV == "development") {
 }
 
 //Handlebars
-//instead of app.set('view engine', 'handlebars');
 app.set("view engine", "hbs");
 app.engine(
   ".hbs",
@@ -29,6 +29,8 @@ app.engine(
     extname: ".hbs",
   })
 );
+//static folder
+app.use(express.static(path.join(__dirname, "public")));
 
 //Routes
 app.use("/", require("./routes/index"));
