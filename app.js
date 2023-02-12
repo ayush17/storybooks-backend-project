@@ -1,12 +1,13 @@
 const path = require("path");
 const express = require("express");
-
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 //Loads the handlebars module
 const handlebars = require("express-handlebars");
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
 //Load config
 
@@ -40,6 +41,10 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      mongooseConnection: mongoose.connection,
+    }),
   })
 );
 //passport middleware

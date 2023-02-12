@@ -1,5 +1,6 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mongoose = require("mongoose");
+const { use } = require("passport");
 const User = require("../models/User");
 
 module.exports = function (passport) {
@@ -36,8 +37,9 @@ module.exports = function (passport) {
     )
   );
   passport.serializeUser(function (user, cb) {
+    // console.log("This is the user", user);
     process.nextTick(function () {
-      cb(null, { id: user.id, username: user.username, name: user.name });
+      cb(null, { id: user.id, name: user.givenName });
     });
   });
 
